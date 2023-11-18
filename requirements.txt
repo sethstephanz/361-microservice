@@ -1,0 +1,4 @@
+Flask==2.2.2
+google-cloud-datastore==2.8.2
+werkzeug==2.2.2
+nltk==3.5
