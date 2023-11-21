@@ -10,4 +10,4 @@ To use my API microservice:
 3. The API will send back 5 hashtags of the most commonly occurring nouns in the text.
 
 UML diagram:
-![alt text](uml.png)
+![alt text](umlCorrected.png)
