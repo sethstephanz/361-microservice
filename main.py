@@ -35,7 +35,7 @@ def index():
 
 
 @app.route('/hashtaggenerator', methods=['POST'])
-def boats_get_post():
+def hashtagGenerator():
     if request.method == 'POST':
         stop_words = stopwords.words("english")
         # don't know where 'wa' is coming from, but is always added, so remove explicitly
@@ -62,9 +62,9 @@ def boats_get_post():
         lemmatized_words = [lemmatizer.lemmatize(word) for word in content]
 
         # then, get rid of stop words (a, the, pronouns, etc.)
-        meaningfulWords = lemmatized_words
-        meaningfulWords = [
-            word for word in lemmatized_words if word.casefold() not in stop_words]
+        # meaningfulWords = lemmatized_words
+        # meaningfulWords = [
+        #     word for word in lemmatized_words if word.casefold() not in stop_words]
 
         # tag words in meaningfulWords for grammatical purpose
         # only really want to create hashtags out of nouns
@@ -79,11 +79,11 @@ def boats_get_post():
 
         # now, produce frequency distribution
         freqency_distribution = FreqDist(keywords)
-        mostCommon10 = freqency_distribution.most_common(5)
+        mostCommonNouns = freqency_distribution.most_common(5)
 
         hashTags = []
 
-        for item in mostCommon10:
+        for item in mostCommonNouns:
             hashTagItem = ('#' + item[0])
             hashTags.append(hashTagItem)
 
