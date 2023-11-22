@@ -19,9 +19,37 @@ from flask import Flask, request
 # from google.cloud import datastore
 import nltk
 # you will need to download these from nltk once per program on your local machine:
+# https://stackoverflow.com/questions/23704510/how-do-i-test-whether-an-nltk-resource-is-already-installed-on-the-machine-runni
+# try:
+#     nltk.data.find('tokenizers/punkt')
+# except LookupError:
+#     nltk.download('punkt')
+
+# if nltk.data.find('corpus/stopwords'):
+#     print('stopwords located')
+
+# try:
+#     nltk.data.find('corpus/stopwords')
+# except LookupError:
+#     nltk.download('stopwords')
+
+# try:
+#     nltk.data.find('stem/wordnet')
+# except LookupError:
+#     nltk.download('wordnet')
+
+# try:
+#     nltk.data.find('corpus/stopwords')
+# except LookupError:
+#     nltk.download('averaged_perceptron_tagger')
+
+# don't need to do this every single time
 nltk.download('punkt')
 nltk.download("stopwords")
 nltk.download('wordnet')
+nltk.download("maxent_treebank_pos_tagger")
+nltk.download("maxent_ne_chunker")
+nltk.download(["tagsets", "universal_tagset"])
 nltk.download("averaged_perceptron_tagger")
 
 app = Flask(__name__)
@@ -58,8 +86,8 @@ def hashtagGenerator():
         content = tokenizer.tokenize(content)
 
         # next, lemmatize the remaining content to further simplify text
-        lemmatizer = WordNetLemmatizer()
-        lemmatized_words = [lemmatizer.lemmatize(word) for word in content]
+        # lemmatizer = WordNetLemmatizer()
+        # lemmatized_words = [lemmatizer.lemmatize(word) for word in content]
 
         # then, get rid of stop words (a, the, pronouns, etc.)
         # meaningfulWords = lemmatized_words
@@ -75,7 +103,7 @@ def hashtagGenerator():
         # keywords = [word for (word, tag) in tags if tag.startswith('NN') or tag == 'NNP']
         keywords = [word for (word, tag) in tags if tag.startswith(
             'NN') or tag == 'NNS']
-        print('tags:', keywords)
+        # print('tags:', keywords)
 
         # now, produce frequency distribution
         freqency_distribution = FreqDist(keywords)
@@ -91,7 +119,7 @@ def hashtagGenerator():
         # print('freq dist:', freqency_distribution.most_common(10))
         # for item in mostCommon10:
         #     returnArr.append(item[0])
-        return ({'Hash Tags: ': hashTags}, 200)
+        return ({'Hashtags': hashTags}, 200)
     else:
         return ({"Error": "Method not found!"}, 404)
 
